@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Stock Price Predictor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: radial-gradient(circle at top left, #eef2ff, #f8fbff);
+    min-height:100vh;
+    display:flex;
+}
+
+/* LEFT SIDEBAR */
+.sidebar{
+    width:260px;
+    background:#ffffffaa;
+    backdrop-filter: blur(15px);
+    height:100vh;
+    padding:25px 20px;
+    border-right:1px solid #e8ecff;
+}
+
+.logo{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    margin-bottom:40px;
+}
+
+.logo h2{
+    font-size:18px;
+    font-weight:700;
+}
+
+.logo span{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.nav a{
+    text-decoration:none;
+    color:#111827;
+    font-size:14px;
+    padding:10px 12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:0.3s;
+}
+
+.nav a:hover,
+.nav a.active{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+/* MAIN */
+.main{
+    flex:1;
+    padding:40px;
+    position:relative;
+}
+
+/* top title */
+.title{
+    text-align:center;
+    margin-top:10px;
+}
+
+.title h1{
+    font-size:40px;
+    font-weight:700;
+}
+
+.title h1 span{
+    color:#4f46e5;
+}
+
+.title p{
+    color:#6b7280;
+    margin-top:5px;
+}
+
+/* FORM CARD */
+.card{
+    width:520px;
+    margin:40px auto;
+    background:#ffffffcc;
+    backdrop-filter: blur(15px);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.05);
+}
+
+.card h3{
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+/* INPUTS */
+.input-group{
+    display:flex;
+    align-items:center;
+    background:#f9fafb;
+    margin-bottom:15px;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+}
+
+.input-group input{
+    border:none;
+    outline:none;
+    background:transparent;
+    width:100%;
+    font-size:14px;
+}
+
+.icon{
+    width:35px;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    margin-right:10px;
+}
+
+.date{ background:#e0e7ff; }
+.open{ background:#dbeafe; }
+.high{ background:#dcfce7; }
+.low{ background:#fee2e2; }
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    color:white;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6);
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.02);
+}
+
+/* bottom cards */
+.features{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:30px;
+}
+
+.feature{
+    background:#fff;
+    padding:15px;
+    border-radius:15px;
+    width:180px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.04);
+    font-size:12px;
+    color:#6b7280;
+}
+
+.feature b{
+    color:#111827;
+}
+
+/* decorative bg candles */
+.bg-candles{
+    position:absolute;
+    right:0;
+    top:0;
+    width:300px;
+    height:100%;
+    opacity:0.2;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #6366f1,
+            #6366f1 20px,
+            transparent 20px,
+            transparent 40px
+        );
+}
+
+/* top right icon */
+.theme{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div class="logo">
+        <h2>📈 Stock Predictor</h2>
+        <span>AI Powered</span>
+    </div>
+
+    <div class="nav">
+        <a class="active">🏠 Home</a>
+        <a>📊 Predict</a>
+        <a>🕒 History</a>
+        <a>📈 Charts</a>
+        <a>ℹ️ About</a>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="theme">☀️</div>
+    <div class="bg-candles"></div>
+
+    <div class="title">
+        <h1>Stock <span>Price</span> Predictor</h1>
+        <p>Predict tomorrow's stock closing price with accuracy</p>
+    </div>
+<form class="card" action="/predict" method="POST">
+    <h3>Enter Stock Data</h3>
+
+    <div class="input-group">
+        <div class="icon date">📅</div>
+        <input type="text" name="date" placeholder="dd-mm-yyyy">
+    </div>
+
+    <div class="input-group">
+        <div class="icon open">📈</div>
+        <input type="text" name="open" placeholder="Enter Open Price">
+    </div>
+
+    <div class="input-group">
+        <div class="icon high">⬆️</div>
+        <input type="text" name="high" placeholder="Enter High Price">
+    </div>
+
+    <div class="input-group">
+        <div class="icon low">⬇️</div>
+        <input type="text" name="low" placeholder="Enter Low Price">
+    </div>
+
+    <button class="btn" type="submit">Predict Close Price</button>
+</form>
+
+
+    {% if prediction_text %}
+<p style="margin-top:15px; font-weight:600; color:#4f46e5;">
+    {{ prediction_text }}
+</p>
+{% endif %}
+
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <b>Accurate Prediction</b><br>
+            AI models for better accuracy
+        </div>
+        <div class="feature">
+            <b>Fast Results</b><br>
+            Get predictions in seconds
+        </div>
+        <div class="feature">
+            <b>Data Security</b><br>
+            Your data is always safe
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

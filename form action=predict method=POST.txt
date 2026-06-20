@@ -1,0 +1,48 @@
+<form action="/predict" method="POST">
+name=""
+<div class="card">
+    <h3>Enter Stock Data</h3>
+
+    <form action="/predict" method="POST">
+
+        <div class="input-group">
+            <div class="icon date">📅</div>
+            <input type="text" name="date" placeholder="dd-mm-yyyy" required>
+        </div>
+
+        <div class="input-group">
+            <div class="icon open">📈</div>
+            <input type="text" name="open" placeholder="Enter Open Price" required>
+        </div>
+
+        <div class="input-group">
+            <div class="icon high">⬆️</div>
+            <input type="text" name="high" placeholder="Enter High Price" required>
+        </div>
+
+        <div class="input-group">
+            <div class="icon low">⬇️</div>
+            <input type="text" name="low" placeholder="Enter Low Price" required>
+        </div>
+
+        <button class="btn" type="submit">Predict Close Price</button>
+
+    </form>
+</div>
+@app.route('/predict', methods=['POST'])
+def predict():
+
+    date = request.form['date']
+    open_price = float(request.form['open'])
+    high_price = float(request.form['high'])
+    low_price = float(request.form['low'])
+
+    # Example prediction (replace with your model)
+    prediction = model.predict([[open_price, high_price, low_price]])
+
+    return render_template("index.html", prediction=prediction[0])
+{% if prediction %}
+<div style="margin-top:15px; text-align:center; font-weight:600; color:#4f46e5;">
+    Predicted Close Price: {{ prediction }}
+</div>
+{% endif %}
